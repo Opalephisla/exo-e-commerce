@@ -1,0 +1,191 @@
+
+body {
+    background-image: url("/img/index-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #f5f5f5;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+#form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/people-bg.jpg");
+    height: 100vh;
+    background-position: center;
+    color: #FFfFfF;
+}
+
+#login-btn {
+    /* put the button in the top right corner*/
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    /* make it fit in the corner*/
+}
+
+.btn-secondary {
+    background-color: #5a5b61;
+    border-color: #6c6d72;
+    color: rgb(255, 255, 255);
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #4a4b50;
+    border-color: #39393d;
+    color: #FFfFfF;
+}
+
+.btn-success {
+    color: rgb(255, 255, 255);
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.btn-warning {
+    background-color: #4a4b50;
+    border-color: #39393d;
+    color: rgb(255, 255, 255);
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn-warning:hover {
+    color: #FFfFfF;
+    background-color: #3f4044;
+    border-color: #303033;
+}
+
+.btn-warning:focus {
+    color: #FFfFfF;
+    background-color: #3f4044;
+    border-color: #37383b;
+}
+
+.btn-warning:visited {
+    color: #FFfFfF;
+    background-color: #3f4044;
+    border-color: #37383b;
+}
+
+#contenu {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#prod-enfants {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#prod-femme {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#prod-homme {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #FFfFfF;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    font-size: 30px;
+    font-weight: bold;
+    color: #FFfFfF;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.card {
+    border: none;
+    width: 22em;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body a {
+    text-decoration: none;
+}
+
+.card-title {
+    font-size: 24px;
+    color: black;
+}
+
+#titre {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#modal-header button {
+    border: none;
+}
+
+.navbar-collapse a{
+    margin-left: 10px;
+}
