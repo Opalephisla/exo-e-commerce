@@ -85,7 +85,7 @@ if (isset($_GET["categ"])) {
                             <br>
                             <div class="form-group">
                                 <?php if (isset($_GET["categ"])) : ?>
-                                    <input type="text" name="gender" class="form-control" value=<?php echo $_GET["categ"]; ?> disabled>
+                                    <input type="text" name="gender" class="form-control" value=<?php echo $_GET["categ"]; ?> readonly>
                                 <?php else : ?>
                                     <input type="text" name="gender" class="form-control" placeholder="Indiquez le genre du produit">
                                 <?php endif ?>

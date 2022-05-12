@@ -11,30 +11,30 @@ if (isset($_POST["submit"])) {
         echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
     } else {
-        header("Location: ../newprod.php?message=Le fichier n'est pas une image");
+        header("Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modif&message=Le fichier n'est pas une image");
         $uploadOk = 0;
     }
 }
 
 // Check file size
 if ($_FILES["fileToUpload"]["size"] > 500000) {
-    header("Location: ../newprod.php?message=Le fichier est trop volumineux");
+    header("Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modif&message=Le fichier est trop volumineux");
     $uploadOk = 0;
 }
 
 // Allow certain file formats
 if ($imageFileType != "png") {
-    header("Location: ../newprod.php?message=Seuls les fichiers PNG sont autorisés");
+    header("Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modif&message=Seuls les fichiers PNG sont autorisés");
     $uploadOk = 0;
 }
 
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-    header("Location: ../newprod.php?message=Le fichier n'a pas été téléchargé");
+    header("Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modifmessage=Le fichier n'a pas été téléchargé");
     // if everything is ok, try to upload file
 } else {
     if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
-        header("Location: ../newprod.php?message=Une erreur est survenue lors du téléchargement du fichier");
+        "Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modif?message=Une erreur est survenue lors du téléchargement du fichier";
 }
 
 $alt = basename(htmlspecialchars(basename($_FILES["fileToUpload"]["name"])), ".png");
@@ -54,7 +54,11 @@ if (
     $req->bindParam(":alt", $alt);
     $req->bindParam(":gender", $_POST["gender"]);
     $req->execute();
-    header("Location: ../index.php");
+    if (isset($_GET["categ"]))
+        header("Location: ../index.php?categ=" . $_GET["categ"]);
+    else {
+        header("Location: ../index.php");
+    }
 } else {
-    header("Location: ../editprod.php?message=Merci de remplir tous les champs?id=" . $id);
+    header("Location: ../index.php?categ=" . $_GET["categ"] . "?id=" . $_GET["id"] . "&modif");
 }

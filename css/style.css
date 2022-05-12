@@ -151,17 +151,12 @@ h2{
     padding: 0;
 }
 
-.card-img-top {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-}
-
 .card {
     border: none;
-    width: 22em;
+    width: 21.8em;
     margin: 0;
     padding: 0;
+    margin-bottom: 20px;
 }
 
 .card-body a {
