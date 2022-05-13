@@ -13,9 +13,8 @@ $products = $dbh->query("SELECT * FROM products");
 <div id="content" class="container-fluid">
 	<?php if (!isset($_GET["categ"])) : ?>
 		<br>
+		<br>
 		<h1>Bienvenue sur le site de Logo</h1>
-		<br>
-		<br>
 		<br>
 		<div id="contenu">
 			<div id="carouselExampleFade" class="carousel slide carousel-fade w-75 p-3" data-bs-ride="carousel">
@@ -42,71 +41,109 @@ $products = $dbh->query("SELECT * FROM products");
 		</div>
 	<?php endif ?>
 	<?php if (isset($_GET["categ"])) : ?>
-		<?php if (!isset($_GET["modif"])) : ?>
+		<?php if (!isset($_GET["modif"]) && !isset($_GET["delete"])) : ?>
 			<div class="modal fade" id="exampleModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditTitle" aria-hidden="true">
-			<?php else : ?>
+			<?php elseif (isset($_GET["modif"]) || isset($_GET["delete"])) : ?>
 				<div class="modal fade show" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalEditTitle" style="display: block;" aria-modal="true" role="dialog">
 				<?php endif ?>
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Modifier un produit</h5>
+							<?php if (isset($_GET["modif"])) : ?>
+								<h5 class="modal-title" id="exampleModalLongTitle">Modifier un produit</h5>
+							<?php elseif (isset($_GET["delete"])) : ?>
+								<h5 class="modal-title" id="exampleModalLongTitle">Supprimer un produit</h5>
+							<?php endif ?>
 							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<?php if (!isset($_GET["categ"])) : ?>
+							<?php if (!isset($_GET["categ"]) && isset($_GET["modif"])) : ?>
 								<form action="functions/edit.php" enctype="multipart/form-data" class="col-md-6" method="post">
-								<?php else : ?>
+								<?php elseif (isset($_GET["categ"]) && isset($_GET["modif"])) : ?>
 									<form action="functions/edit.php?categ=<?php echo $_GET["categ"] ?><?php if (isset($_GET["id"])) echo "&id=" . $_GET["id"] ?>" enctype="multipart/form-data" class="col-md-6" method="post">
 									<?php endif ?>
-									<br>
-									<?php if (isset($_GET["message"])) : ?>
-										<div class="alert alert-danger" role="alert">
-											<?php echo $_GET["message"]; ?>
-										</div>
-									<?php endif ?>
-									<?php if (isset($_GET["modif"]) && isset($_GET["id"])) : ?>
-										<?php $req = $dbh->query("SELECT * FROM products WHERE id = " . $_GET["id"]);
-										$row = $req->fetch();
-										?>
-										<div class="form-group">
-											<input type="text" name="nomprod" class="form-control" placeholder="Entrez le nom du produit" value="<?php
-																																					echo $row["nom"];
-																																					?>">
-										</div>
-										<br>
-										<div class="form-group">
-											<textarea name="description" class="form-control" placeholder="Entrez la description du produit"><?php echo $row["description"] ?></textarea>
-										</div>
-										<br>
-										<div class="form-group">
-											<input type="text" name="prixht" class="form-control" placeholder="Indiquez le prix ht du produit" value="<?php echo $row["prixht"] ?>">
-										</div>
-										<br>
-										<div class="form-group">
-											<input type="text" name="tva" class="form-control" placeholder="Indiquez la tva du produit" value="<?php echo $row["tva"] ?>">
-										</div>
-										<br>
-										<div class="form-group">
-											<input type="text" name="prixttc" class="form-control" placeholder="Indiquez le prix ttc du produit" value="<?php echo $row["prixttc"] ?>">
-										</div>
-										<br>
-									<?php endif ?>
-									<div class="form-group">
-										<?php if (isset($_GET["categ"])) : ?>
-											<input type="text" name="gender" class="form-control" value=<?php echo $_GET["categ"]; ?> readonly>
-										<?php else : ?>
-											<input type="text" name="gender" class="form-control" placeholder="Indiquez le genre du produit">
-										<?php endif ?>
-									</div>
-									<br>
-									<div class="form-group">
-										<input type="file" name="fileToUpload" id="fileToUpload">
-									</div>
+									<?php if (!isset($_GET["categ"]) && isset($_GET["delete"])) : ?>
+										<form action="functions/delete.php" enctype="multipart/form-data" class="col-md-6" method="post">
+										<?php elseif (isset($_GET["categ"]) && isset($_GET["delete"])) : ?>
+											<form action="functions/delete.php?categ=<?php echo $_GET["categ"] ?><?php if (isset($_GET["id"])) echo "&id=" . $_GET["id"] ?>" enctype="multipart/form-data" class="col-md-6" method="post">
+											<?php endif ?>
 
-									<br>
+											<br>
+											<?php if (isset($_GET["message"])) : ?>
+												<div class="alert alert-danger" role="alert">
+													<?php echo $_GET["message"]; ?>
+												</div>
+											<?php endif ?>
+											<?php if (isset($_GET["id"])) : ?>
+												<?php $req = $dbh->query("SELECT * FROM products WHERE id = " . $_GET["id"]);
+												$row = $req->fetch();
+												?>
+												<?php if (isset($_GET["modif"])) : ?>
+
+													<div class="form-group">
+														<input type="text" name="nomprod" class="form-control" placeholder="Entrez le nom du produit" value="<?php
+																																								echo $row["nom"];
+																																								?>">
+													</div>
+													<br>
+													<div class="form-group">
+														<textarea name="description" class="form-control" placeholder="Entrez la description du produit"><?php echo $row["description"] ?></textarea>
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="prixht" class="form-control" placeholder="Indiquez le prix ht du produit" value="<?php echo $row["prixht"] ?>">
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="tva" class="form-control" placeholder="Indiquez la tva du produit" value="<?php echo $row["tva"] ?>">
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="prixttc" class="form-control" placeholder="Indiquez le prix ttc du produit" value="<?php echo $row["prixttc"] ?>">
+													</div>
+													<br>
+												<?php endif ?>
+												<?php if (isset($_GET["delete"])) : ?>
+													<div class="form-group">
+														<input type="text" name="nomprod" class="form-control" placeholder="Entrez le nom du produit" value="<?php
+																																								echo $row["nom"];
+																																								?>" readonly>
+													</div>
+													<br>
+													<div class="form-group">
+														<textarea name="description" class="form-control" placeholder="Entrez la description du produit" readonly><?php echo $row["description"] ?></textarea>
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="prixht" class="form-control" placeholder="Indiquez le prix ht du produit" value="<?php echo $row["prixht"] ?>" readonly>
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="tva" class="form-control" placeholder="Indiquez la tva du produit" value="<?php echo $row["tva"] ?>" readonly>
+													</div>
+													<br>
+													<div class="form-group">
+														<input type="text" name="prixttc" class="form-control" placeholder="Indiquez le prix ttc du produit" value="<?php echo $row["prixttc"] ?>" readonly>
+													</div>
+													<br>
+												<?php endif ?>
+											<?php endif ?>
+											<div class="form-group">
+												<?php if (isset($_GET["categ"])) : ?>
+													<input type="text" name="gender" class="form-control" value=<?php echo $_GET["categ"]; ?> readonly>
+												<?php else : ?>
+													<input type="text" name="gender" class="form-control" placeholder="Indiquez le genre du produit">
+												<?php endif ?>
+											</div>
+											<br>
+											<?php if (!isset($_GET["delete"])) : ?>
+												<div class="form-group">
+													<input type="file" name="fileToUpload" id="fileToUpload">
+												</div>
+											<?php endif ?>
+											<br>
 						</div>
 						<div class="modal-footer">
 							<?php if (isset($_GET["categ"])) : ?>
@@ -114,7 +151,14 @@ $products = $dbh->query("SELECT * FROM products");
 							<?php else : ?>
 								<a href="index.php" type="button" class="btn btn-danger">Annuler</a>
 							<?php endif ?>
-							<button type="submit" class="btn btn-primary">Modifier le produit</button>
+							<?php if (isset($_GET["delete"])) : ?>
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							<?php endif ?>
+
+							<?php if (isset($_GET["modif"])) : ?>
+								<button type="submit" class="btn btn-primary">Modifier le produit</button>
+							<?php endif ?>
+
 						</div>
 						</form>
 					</div>
@@ -146,7 +190,7 @@ $products = $dbh->query("SELECT * FROM products");
 													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&modif" class="btn btn-dark" id="prod<?php echo $product["id"] ?>">
 														Modifier
 													</a>
-													<a href="deleteprod.php?id=<?php echo $product["id"] ?>" class="btn btn-danger" id="delete-btn">Supprimer</a>
+													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&delete" class="btn btn-danger" id="delete-btn">Supprimer</a>
 												<?php endif ?>
 											</div>
 										</div>
@@ -179,7 +223,7 @@ $products = $dbh->query("SELECT * FROM products");
 													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&modif" class="btn btn-dark" id="prod<?php echo $product["id"] ?>">
 														Modifier
 													</a>
-													<a href="deleteprod.php?id=<?php echo $product["id"] ?>" class="btn btn-danger" id="delete-btn">Supprimer</a>
+													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&delete" class="btn btn-danger" id="delete-btn">Supprimer</a>
 												<?php endif ?>
 											</div>
 										</div>
@@ -212,7 +256,7 @@ $products = $dbh->query("SELECT * FROM products");
 													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&modif" class="btn btn-dark" id="prod<?php echo $product["id"] ?>">
 														Modifier
 													</a>
-													<a href="deleteprod.php?id=<?php echo $product["id"] ?>" class="btn btn-danger" id="delete-btn">Supprimer</a>
+													<a href="index.php?categ=<?php echo $_GET["categ"] ?>&id=<?php echo $product["id"] ?>&delete" class="btn btn-danger" id="delete-btn">Supprimer</a>
 												<?php endif ?>
 											</div>
 										</div>
@@ -228,7 +272,7 @@ $products = $dbh->query("SELECT * FROM products");
 				<div class="modal-backdrop fade show"></div>
 				<div class="modal-backdrop fade show"></div>
 			<?php endif ?>
-			<?php if (isset($_GET["modif"])) : ?>
+			<?php if (isset($_GET["modif"]) || isset($_GET["delete"])) : ?>
 				<div class="modal-backdrop fade show"></div>
 				<div class="modal-backdrop fade show"></div>
 			<?php endif ?>
